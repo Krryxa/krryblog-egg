@@ -1,5 +1,7 @@
 import { Service } from 'egg'
-import { commonColumn } from '../../const'
+import { commonColumn, publishedCondition } from '../../const'
+
+// 找出不需要关联查询的，采用普通select方法。比如时间归档的接口不需要关联查询
 
 /**
  * BlogService Service
@@ -26,15 +28,36 @@ export default class ListService extends Service {
    */
   async getBlog(params) {
     // mysql 分页查询
-    const result = await this.app.mysql.select('blog', {
-      limit: +params.pageSize, // 返回数据量
-      offset: (+params.pageNo - 1) * params.pageSize, // 数据偏移量
-      columns: commonColumn,
-      orders: [
-        ['isTop', 'desc'],
-        ['id', 'desc']
-      ] // 排序方式
-    })
+    // const result = await this.app.mysql.select('blog', {
+    //   limit: +params.pageSize, // 返回数据量
+    //   offset: (+params.pageNo - 1) * params.pageSize, // 数据偏移量
+    //   columns: commonColumn,
+    //   orders: [
+    //     ['isTop', 'desc'],
+    //     ['id', 'desc']
+    //   ] // 排序方式
+    // })
+    const result = await this.app.mysql.query(
+      `select
+        b.id,
+        c.name as classify,
+        ${commonColumn.join(',')}
+      from
+        blog b
+      left join
+        classify c
+      on
+        b.classifyId = c.id
+      where
+      ${publishedCondition}
+      and
+        b.isLove = 0
+      order by
+        b.isTop desc,
+        b.id desc
+      limit ?,?`,
+      [(+params.pageNo - 1) * params.pageSize, +params.pageSize]
+    )
 
     return { result }
   }

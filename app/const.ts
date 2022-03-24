@@ -1,17 +1,18 @@
 export const commonColumn = [
-  'userId',
-  'title',
-  'description',
-  'imageName',
-  'image',
-  'classifyId',
-  'label',
-  'hit',
-  'comment',
-  'createTime',
-  'updateTime',
-  'status',
-  'isDelete',
-  'isTop',
-  'isLove'
+  'b.userId',
+  'b.title',
+  'b.description',
+  'b.imageName',
+  'b.image',
+  'b.classifyId',
+  'b.label',
+  'b.hit',
+  'b.comment',
+  'b.createTime',
+  'b.updateTime',
+  'b.status',
+  'b.isDelete',
+  'b.isTop',
+  'b.isLove'
 ]
+export const publishedCondition = 'b.status = 1 and b.isDelete = 0'
