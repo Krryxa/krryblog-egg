@@ -15,4 +15,7 @@ export const commonColumn = [
   'b.isTop',
   'b.isLove'
 ]
-export const publishedCondition = 'b.status = 1 and b.isDelete = 0'
+export const publishedCondition = {
+  status: 1,
+  isDelete: 0
+}

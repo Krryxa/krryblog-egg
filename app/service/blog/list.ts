@@ -1,12 +1,12 @@
-import { Service } from 'egg'
+import { BaseService } from '../base'
 import { commonColumn, publishedCondition } from '../../const'
 
 // 找出不需要关联查询的，采用普通select方法。比如时间归档的接口不需要关联查询
 
 /**
- * BlogService Service
+ * ListService Service
  */
-export default class ListService extends Service {
+export default class ListService extends BaseService {
   /**
    * 根据主键查询一条数据
    * @param blog - blog info
@@ -37,7 +37,10 @@ export default class ListService extends Service {
     //     ['id', 'desc']
     //   ] // 排序方式
     // })
-    const result = await this.app.mysql.query(
+
+    const { Mysql } = this
+
+    const data = await Mysql.query(
       `select
         b.id,
         c.name as classify,
@@ -49,7 +52,7 @@ export default class ListService extends Service {
       on
         b.classifyId = c.id
       where
-      ${publishedCondition}
+      ${this.parseQueryCondition(publishedCondition, 'b')}
       and
         b.isLove = 0
       order by
@@ -58,7 +61,13 @@ export default class ListService extends Service {
       limit ?,?`,
       [(+params.pageNo - 1) * params.pageSize, +params.pageSize]
     )
+    const blogLen = await Mysql.count('blog', {
+      ...publishedCondition,
+      isLove: 0
+    })
 
-    return { result }
+    return {
+      result: { data, blogLen }
+    }
   }
 }
