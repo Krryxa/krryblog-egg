@@ -6,6 +6,8 @@ export default (app: Application) => {
   router.get('/', controller.home.index)
   // 博客相关（分页查询、查询详情）
   router.resources('blogList', '/blog/list', controller.blog.list)
+  // 查询所有博客
+  router.get('/blog/getAllBlog', controller.blog.list.getAllBlog)
   // 查询博客分类
   router.get('/blog/getClassify', controller.blog.classify.getClassify)
   // 查询博客分类列表

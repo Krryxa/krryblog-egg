@@ -83,4 +83,29 @@ export default class ListService extends BaseService {
       result: { data, blogLen }
     }
   }
+
+  /**
+   * 查询所有博客
+   * @param blog - blog info
+   */
+  async getAllBlog(type) {
+    const { Mysql } = this
+
+    const isTop = type === 'YES' ? [['isTop', 'desc']] : []
+
+    const data = await Mysql.select('blog', {
+      columns: ['id', ...commonColumn.map((ele) => ele.slice(2))],
+      where: publishedCondition,
+      orders: isTop.concat([['id', 'desc']]) as [
+        string,
+        'desc' | 'asc' | 'DESC' | 'ASC'
+      ][]
+    })
+    // 处理时间，只保留年月日
+    this.handleTime(data, ['createTime', 'updateTime'])
+
+    return {
+      result: { data }
+    }
+  }
 }

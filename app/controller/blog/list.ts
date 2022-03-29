@@ -48,6 +48,25 @@ export default class ListController extends BaseController {
   }
 
   /**
+   * @description: 查询所有博客
+   * @param {*}
+   * @return {*}
+   */
+  async getAllBlog() {
+    const { ctx } = this
+    ctx.validate(
+      {
+        type: { type: 'string', required: true }
+      },
+      ctx.query
+    )
+    const { type } = ctx.query
+    const BlogInfo = await ctx.service.blog.list.getAllBlog(type)
+
+    this.success(BlogInfo)
+  }
+
+  /**
    * @description: post 请求：新增数据
    * @param {*}
    * @return {*}
