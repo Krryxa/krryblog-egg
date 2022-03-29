@@ -12,14 +12,36 @@ export default class ListService extends BaseService {
    * @param blog - blog info
    */
   async getBlogById(id) {
-    console.log(id)
-    // mysql 查询
-    // const result = await this.app.mysql.select('blogs', {
-    //   where: { id }
-    // })
-    const result = { title: '测试数据' }
+    const { Mysql } = this
 
-    return { result }
+    const data = await Mysql.query(
+      `select
+        b.id,
+        u.name as userName,
+        c.name as classify,
+        b.content_hm,
+        ${commonColumn.join(',')}
+      from
+        blog b
+      left join
+			  user u
+		  on
+        b.userId = u.id
+      left join
+        classify c
+      on
+        b.classifyId = c.id
+      where
+      ${this.parseQueryCondition(publishedCondition, 'b')}
+      and
+        b.id = ?`,
+      [id]
+    )
+
+    return {
+      code: Object.keys(data).length ? 0 : 404,
+      result: { data: data?.[0] }
+    }
   }
 
   /**
@@ -27,7 +49,6 @@ export default class ListService extends BaseService {
    * @param blog - blog info
    */
   async getBlog(params) {
-
     const { Mysql } = this
 
     const data = await Mysql.query(
