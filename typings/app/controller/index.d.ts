@@ -4,6 +4,7 @@
 import 'egg';
 import ExportBase from '../../../app/controller/base';
 import ExportHome from '../../../app/controller/home';
+import ExportPart from '../../../app/controller/part';
 import ExportBlogClassify from '../../../app/controller/blog/classify';
 import ExportBlogList from '../../../app/controller/blog/list';
 
@@ -11,6 +12,7 @@ declare module 'egg' {
   interface IController {
     base: ExportBase;
     home: ExportHome;
+    part: ExportPart;
     blog: {
       classify: ExportBlogClassify;
       list: ExportBlogList;

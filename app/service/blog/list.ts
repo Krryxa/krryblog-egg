@@ -51,7 +51,7 @@ export default class ListService extends BaseService {
   async getBlog(params) {
     const { Mysql } = this
 
-    const data = await Mysql.query(
+    const data = (await Mysql.query(
       `select
         b.id,
         c.name as classify,
@@ -71,7 +71,9 @@ export default class ListService extends BaseService {
         b.id desc
       limit ?,?`,
       [(+params.pageNo - 1) * params.pageSize, +params.pageSize]
-    )
+    )) as EggMySQLSelectResult
+    // 处理时间，只保留年月日
+    this.handleTime(data, ['createTime', 'updateTime'])
     const blogLen = await Mysql.count('blog', {
       ...publishedCondition,
       isLove: 0

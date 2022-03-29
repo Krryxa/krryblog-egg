@@ -12,8 +12,9 @@ export class BaseService extends Service {
   getMysql = () => {
     // 由于官方 egg-mysql 定义的类型缺少部分函数，需要手动加上
     // 先获取原本类型，再继承
-    type BaseMysql = typeof this.app.mysql
-    interface MysqlType extends BaseMysql {
+    // type BaseMysql = typeof this.app.mysql
+    // 发现可直接读取 EggMySQL 类型
+    interface MysqlType extends EggMySQL {
       count: (table: string, values: object) => Promise<number>
       get: any
     }
@@ -36,5 +37,16 @@ export class BaseService extends Service {
     return Object.entries(condition)
       .map((ele) => `${alias}${ele[0]} = ${ele[1]}`)
       .join(' and ')
+  }
+
+  /**
+   * @description: 处理时间，去除时分秒
+   * @param {*} data
+   * @return {*}
+   */
+  handleTime(data: any[], keyList) {
+    data.forEach((ele: any) => {
+      keyList.forEach((key) => (ele[key] = ele[key].split(' ')[0]))
+    })
   }
 }
