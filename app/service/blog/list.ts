@@ -27,16 +27,6 @@ export default class ListService extends BaseService {
    * @param blog - blog info
    */
   async getBlog(params) {
-    // mysql 分页查询
-    // const result = await this.app.mysql.select('blog', {
-    //   limit: +params.pageSize, // 返回数据量
-    //   offset: (+params.pageNo - 1) * params.pageSize, // 数据偏移量
-    //   columns: commonColumn,
-    //   orders: [
-    //     ['isTop', 'desc'],
-    //     ['id', 'desc']
-    //   ] // 排序方式
-    // })
 
     const { Mysql } = this
 

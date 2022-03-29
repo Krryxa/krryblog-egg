@@ -6,4 +6,8 @@ export default (app: Application) => {
   router.get('/', controller.home.index)
   router.resources('blogList', '/blog/list', controller.blog.list)
   router.get('/blog/getClassify', controller.blog.classify.getClassify)
+  router.get(
+    '/blog/getBlogByClassifyId/:id',
+    controller.blog.classify.getClassifyBlog
+  )
 }

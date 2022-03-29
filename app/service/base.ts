@@ -15,6 +15,7 @@ export class BaseService extends Service {
     type BaseMysql = typeof this.app.mysql
     interface MysqlType extends BaseMysql {
       count: (table: string, values: object) => Promise<number>
+      get: any
     }
     return this.app.mysql as MysqlType
   }
