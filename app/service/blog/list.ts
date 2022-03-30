@@ -71,7 +71,7 @@ export default class ListService extends BaseService {
         b.isTop desc,
         b.id desc
       limit ?,?`,
-      [(+params.pageNo - 1) * params.pageSize, +params.pageSize]
+      this.handlePageParams(params)
     )) as EggMySQLSelectResult
     // 处理时间，只保留年月日
     this.handleTime(data, ['createTime', 'updateTime'])

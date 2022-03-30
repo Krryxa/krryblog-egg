@@ -49,4 +49,13 @@ export class BaseService extends Service {
       keyList.forEach((key) => (ele[key] = ele[key].split(' ')[0]))
     })
   }
+
+  /**
+   * @description: 处理分页参数
+   * @param {*} params
+   * @return {*}
+   */
+  handlePageParams(params) {
+    return [(+params.pageNo - 1) * params.pageSize, +params.pageSize]
+  }
 }
