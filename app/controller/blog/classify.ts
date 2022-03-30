@@ -14,7 +14,7 @@ export default class ClassifyController extends BaseController {
   }
 
   /**
-   * @description: 查询分类博客
+   * @description: 按分类、标签、关键字、love 查询
    * @param {*}
    * @return {*}
    */
@@ -23,16 +23,21 @@ export default class ClassifyController extends BaseController {
     ctx.validate(
       {
         pageNo: { type: 'string', format: /\d+/, required: false },
-        pageSize: { type: 'string', format: /\d+/, required: false }
+        pageSize: { type: 'string', format: /\d+/, required: false },
+        tag: { type: 'string', required: false },
+        keyword: { type: 'string', required: false }
       },
       ctx.query
     )
-    const { pageNo, pageSize } = ctx.query
+    const { pageNo, pageSize, tag, keyword } = ctx.query
     const reqData = ctx.helper.filterParams({
       pageNo,
       pageSize,
-      id: ctx.params.id
+      id: ctx.params.id,
+      tag,
+      keyword
     })
+
     const BlogInfo = await ctx.service.blog.classify.getClassifyBlog(reqData)
     this.success(BlogInfo)
   }

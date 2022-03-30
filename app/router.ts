@@ -17,6 +17,12 @@ export default (app: Application) => {
     '/blog/getBlogByClassifyId/:id',
     controller.blog.classify.getClassifyBlog
   )
+  // 按标签查询
+  router.get('/blog/getBlogByTag', controller.blog.classify.getClassifyBlog)
+  // 按关键字查询
+  router.get('/blog/getBlogBykeyword', controller.blog.classify.getClassifyBlog)
+  // 按 love 查询
+  router.get('/blog/getLoveBlog', controller.blog.classify.getClassifyBlog)
   // 查询所有音乐
   router.get('/part/getMusic', controller.part.getMusic)
   // 查询博客更新记录
