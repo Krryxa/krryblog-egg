@@ -14,7 +14,7 @@ export class BaseController extends Controller {
       if (data.result) {
         // 具体成功状态码由 controller 或 service 定义
         ctx.body = {
-          code: 0,
+          code: 200,
           message: 'Request successful',
           ...data
         }
