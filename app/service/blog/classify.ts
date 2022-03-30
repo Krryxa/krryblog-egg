@@ -78,7 +78,7 @@ export default class ClassifyService extends BaseService {
     }
 
     return {
-      code: data.length ? 0 : 404,
+      code: data.length ? 200 : 404,
       result: {
         data,
         blogLen,

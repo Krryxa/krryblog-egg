@@ -40,7 +40,7 @@ export default class ListService extends BaseService {
     this.increasementHit(data)
 
     return {
-      code: Object.keys(data).length ? 0 : 404,
+      code: Object.keys(data).length ? 200 : 404,
       result: { data: data?.[0] }
     }
   }
@@ -141,7 +141,7 @@ export default class ListService extends BaseService {
     this.increasementHit(data)
 
     return {
-      code: Object.keys(data).length ? 0 : 404,
+      code: Object.keys(data).length ? 200 : 404,
       result: { data: data?.[0] }
     }
   }
