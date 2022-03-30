@@ -37,6 +37,7 @@ export default class ListService extends BaseService {
         b.id = ?`,
       [id]
     )
+    this.increasementHit(data)
 
     return {
       code: Object.keys(data).length ? 0 : 404,
@@ -137,10 +138,47 @@ export default class ListService extends BaseService {
         b.title = ?`,
       [title]
     )
+    this.increasementHit(data)
 
     return {
       code: Object.keys(data).length ? 0 : 404,
       result: { data: data?.[0] }
     }
+  }
+
+  /**
+   * @description: 访问量 +1
+   * @param {*}
+   * @return {*}
+   */
+  async increasementHit(data) {
+    const notEmpty = !!Object.keys(data).length
+    if (notEmpty) {
+      data[0].hit++
+      const blog = {
+        id: data[0].id,
+        hit: data[0].hit
+      }
+      this.updateBlog(blog)
+    }
+  }
+
+  /**
+   * @description: 更新博客其他信息（不校验登录态，更新点击量、评论数）
+   * @param {*}
+   * @return {*}
+   */
+  async updateBlog(blog) {
+    const { Mysql, ctx } = this
+
+    // 只取下面三个参数，并过滤，保证此方法只更新点击量、评论数
+    const { id, hit, comment } = blog
+    const reqData = ctx.helper.filterParams({
+      id,
+      hit,
+      comment
+    })
+    const result = await Mysql.update('blog', reqData)
+    return result.affectedRows === 1
   }
 }
