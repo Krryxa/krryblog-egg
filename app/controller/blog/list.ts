@@ -67,6 +67,25 @@ export default class ListController extends BaseController {
   }
 
   /**
+   * @description: 友情链接 or 关于
+   * @param {*}
+   * @return {*}
+   */
+  async getLinkOrAbout() {
+    const { ctx } = this
+    ctx.validate(
+      {
+        title: { type: 'string', required: true }
+      },
+      ctx.query
+    )
+    const { title } = ctx.query
+    const BlogInfo = await ctx.service.blog.list.getBlogByTitle(title)
+
+    this.success(BlogInfo)
+  }
+
+  /**
    * @description: post 请求：新增数据
    * @param {*}
    * @return {*}

@@ -108,4 +108,39 @@ export default class ListService extends BaseService {
       result: { data }
     }
   }
+
+  /**
+   * 根据 title 查询博客
+   * @param blog - blog info
+   */
+  async getBlogByTitle(title) {
+    const { Mysql } = this
+
+    const data = await Mysql.query(
+      `select
+        b.id,
+        u.name as userName,
+        c.name as classify,
+        b.content_hm,
+        ${commonColumn.join(',')}
+      from
+        blog b
+      left join
+			  user u
+		  on
+        b.userId = u.id
+      left join
+        classify c
+      on
+        b.classifyId = c.id
+      where
+        b.title = ?`,
+      [title]
+    )
+
+    return {
+      code: Object.keys(data).length ? 0 : 404,
+      result: { data: data?.[0] }
+    }
+  }
 }
