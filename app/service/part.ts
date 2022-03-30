@@ -21,4 +21,23 @@ export default class PartService extends BaseService {
       result: { data, musicLen }
     }
   }
+
+  /**
+   * @description: 查询博客更新记录
+   * @param {*}
+   * @return {*}
+   */
+  async getReviseList() {
+    const { Mysql } = this
+
+    const data = await Mysql.select('revise', {
+      columns: ['id', 'title', 'createTime', 'remark'],
+      orders: [['id', 'desc']]
+    })
+    this.handleTime(data, ['createTime'])
+
+    return {
+      result: { data }
+    }
+  }
 }

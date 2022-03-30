@@ -17,4 +17,6 @@ export default (app: Application) => {
   )
   // 查询所有音乐
   router.get('/part/getMusic', controller.part.getMusic)
+  // 查询博客更新记录
+  router.get('/part/getReviseList', controller.part.getReviseList)
 }
