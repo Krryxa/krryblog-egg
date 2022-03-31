@@ -181,4 +181,23 @@ export default class ListService extends BaseService {
     const result = await Mysql.update('blog', reqData)
     return result.affectedRows === 1
   }
+
+  /**
+   * @description: 查询汇总数据
+   * @param {*}
+   * @return {*}
+   */
+  async getSummarizedData() {
+    const { Mysql } = this
+
+    const data = await Mysql.query(
+      `select
+        count(*) as blogSum,
+        SUM(hit) as hitSum,
+        SUM(comment) as commentSum
+      from
+        blog`
+    )
+    return { result: { data: data[0] } }
+  }
 }

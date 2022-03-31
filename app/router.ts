@@ -23,6 +23,8 @@ export default (app: Application) => {
   router.get('/blog/getBlogBykeyword', controller.blog.classify.getClassifyBlog)
   // 按 love 查询
   router.get('/blog/getLoveBlog', controller.blog.classify.getClassifyBlog)
+  // 查询汇总数据
+  router.get('/blog/getSummarizedData', controller.blog.list.getSummarizedData)
   // 查询所有音乐
   router.get('/part/getMusic', controller.part.getMusic)
   // 查询博客更新记录

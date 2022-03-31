@@ -86,6 +86,19 @@ export default class ListController extends BaseController {
   }
 
   /**
+   * @description: 查询汇总数据
+   * @param {*}
+   * @return {*}
+   */
+  async getSummarizedData() {
+    const { ctx } = this
+
+    const result = await ctx.service.blog.list.getSummarizedData()
+
+    this.success(result)
+  }
+
+  /**
    * @description: put 请求：更新博客其他信息（不校验登录态，更新点击量、评论数）
    * @param {*}
    * @return {*}
