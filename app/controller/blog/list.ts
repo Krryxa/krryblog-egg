@@ -42,7 +42,11 @@ export default class ListController extends BaseController {
       },
       ctx.params
     )
-    const BlogInfo = await ctx.service.blog.list.getBlogById(+ctx.params.id)
+    const reqData = {
+      key: 'id',
+      value: ctx.params.id
+    }
+    const BlogInfo = await ctx.service.blog.list.getBlogByOnly(reqData)
 
     this.success(BlogInfo)
   }
@@ -79,8 +83,11 @@ export default class ListController extends BaseController {
       },
       ctx.query
     )
-    const { title } = ctx.query
-    const BlogInfo = await ctx.service.blog.list.getBlogByTitle(title)
+    const reqData = {
+      key: 'title',
+      value: ctx.query.title
+    }
+    const BlogInfo = await ctx.service.blog.list.getBlogByOnly(reqData, false)
 
     this.success(BlogInfo)
   }

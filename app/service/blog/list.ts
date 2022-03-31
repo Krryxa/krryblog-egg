@@ -8,10 +8,12 @@ import { commonColumn, publishedCondition } from '../../const'
  */
 export default class ListService extends BaseService {
   /**
-   * 根据主键查询一条数据
-   * @param blog - blog info
+   * @description: 根据唯一条件，查询一条数据
+   * @param {*} params 条件，key: value
+   * @param {*} condition 是否附带已发布条件
+   * @return {*}
    */
-  async getBlogById(id) {
+  async getBlogByOnly(params, condition = true) {
     const { Mysql } = this
 
     const data = await Mysql.query(
@@ -32,10 +34,13 @@ export default class ListService extends BaseService {
       on
         b.classifyId = c.id
       where
-      ${this.parseQueryCondition(publishedCondition, 'b')}
-      and
-        b.id = ?`,
-      [id]
+      ${
+        condition
+          ? this.parseQueryCondition(publishedCondition, 'b') + ' and '
+          : ''
+      }
+        b.${params.key} = ?`,
+      [params.value]
     )
     this.increasementHit(data)
 
@@ -107,42 +112,6 @@ export default class ListService extends BaseService {
 
     return {
       result: { data }
-    }
-  }
-
-  /**
-   * 根据 title 查询博客
-   * @param blog - blog info
-   */
-  async getBlogByTitle(title) {
-    const { Mysql } = this
-
-    const data = await Mysql.query(
-      `select
-        b.id,
-        u.name as userName,
-        c.name as classify,
-        b.content_hm,
-        ${commonColumn.join(',')}
-      from
-        blog b
-      left join
-			  user u
-		  on
-        b.userId = u.id
-      left join
-        classify c
-      on
-        b.classifyId = c.id
-      where
-        b.title = ?`,
-      [title]
-    )
-    this.increasementHit(data)
-
-    return {
-      code: Object.keys(data).length ? 200 : 404,
-      result: { data: data?.[0] }
     }
   }
 
