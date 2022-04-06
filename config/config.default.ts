@@ -16,6 +16,10 @@ export default (appInfo: EggAppInfo) => {
 
     tracer: {
       mode: 'uuid'
+    },
+
+    jwt: {
+      secret: 'krryxq123456'
     }
   }
 

@@ -40,4 +40,42 @@ export default class PartService extends BaseService {
       result: { data }
     }
   }
+
+  /**
+   * @description: 登录
+   * @param {*}
+   * @return {*}
+   */
+  async login(reqData) {
+    const { Mysql, app, ctx } = this
+    const user = await Mysql.get('user', { name: reqData.name })
+
+    let message = 'success'
+    let id = 'no'
+    if (user) {
+      if (user.password === reqData.password) {
+        // 生成 token
+        const token = app.jwt.sign(
+          {
+            username: reqData.name // 保存的用户数据，可通过 ctx.state.user 获取
+          },
+          app.config.jwt.secret, // 根据设置的秘钥生成
+          {
+            expiresIn: 60 * 60 * 24 + 's' // 设置过期时间 24 小时
+          }
+        )
+        id = user.id
+        ctx.cookies.set('token', token) // 登录态放到 cookie
+      } else {
+        message = 'The password is wrong~'
+      }
+    } else {
+      message = 'The username does not exist~'
+    }
+
+    return {
+      message,
+      result: id
+    }
+  }
 }

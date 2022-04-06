@@ -29,4 +29,7 @@ export default (app: Application) => {
   router.get('/part/getMusic', controller.part.getMusic)
   // 查询博客更新记录
   router.get('/part/getReviseList', controller.part.getReviseList)
+
+  // 登录接口
+  router.post('/part/login', controller.part.login)
 }

@@ -17,6 +17,7 @@ import 'egg-view';
 import 'egg-validate';
 import 'egg-apigw-tracer';
 import 'egg-mysql';
+import 'egg-jwt';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -35,5 +36,6 @@ declare module 'egg' {
     validate?: EggPluginItem;
     tracer?: EggPluginItem;
     mysql?: EggPluginItem;
+    jwt?: EggPluginItem;
   }
 }
