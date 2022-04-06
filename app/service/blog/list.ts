@@ -42,7 +42,7 @@ export default class ListService extends BaseService {
         b.${params.key} = ?`,
       [params.value]
     )
-    this.increasementHit(data)
+    this.increasementNum(data)
 
     return {
       code: Object.keys(data).length ? 200 : 404,
@@ -116,19 +116,18 @@ export default class ListService extends BaseService {
   }
 
   /**
-   * @description: 访问量 +1
+   * @description: 访问量/评论量 +1
    * @param {*}
    * @return {*}
    */
-  async increasementHit(data) {
+  async increasementNum(data, key = 'hit') {
     const notEmpty = !!Object.keys(data).length
     if (notEmpty) {
-      data[0].hit++
       const blog = {
         id: data[0].id,
-        hit: data[0].hit
+        [key]: ++data[0][key]
       }
-      this.updateBlog(blog)
+      return this.updateBlog(blog)
     }
   }
 
@@ -148,7 +147,7 @@ export default class ListService extends BaseService {
       comment
     })
     const result = await Mysql.update('blog', reqData)
-    return result.affectedRows === 1
+    return result.affectedRows === 1 ? blog : false
   }
 
   /**
@@ -168,5 +167,22 @@ export default class ListService extends BaseService {
         blog`
     )
     return { result: { data: data[0] } }
+  }
+
+  /**
+   * @description: 博客评论数 +1
+   * @param {*}
+   * @return {*}
+   */
+  async updateBlogComment(id: string) {
+    const { Mysql } = this
+
+    // 先查询这个博客
+    const data = await Mysql.select('blog', {
+      columns: ['id', 'comment'],
+      where: { id }
+    })
+    const blog = await this.increasementNum(data, 'comment')
+    return blog?.comment
   }
 }

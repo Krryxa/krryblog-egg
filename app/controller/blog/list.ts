@@ -106,9 +106,22 @@ export default class ListController extends BaseController {
   }
 
   /**
-   * @description: put 请求：更新博客其他信息（不校验登录态，更新点击量、评论数）
+   * @description: put 请求：更新博客其他信息（不校验登录态，更新评论数）
+   * 客户端要携带 csrftoken
    * @param {*}
    * @return {*}
    */
-  async update() {}
+  async update() {
+    const { ctx } = this
+    ctx.validate(
+      {
+        id: { type: 'string', format: /\d+/, required: true }
+      },
+      ctx.params
+    )
+
+    const number = await ctx.service.blog.list.updateBlogComment(ctx.params.id)
+
+    ctx.body = number
+  }
 }
