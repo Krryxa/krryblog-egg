@@ -41,4 +41,6 @@ export default (app: Application) => {
   router.post('/krry/updateParts', jwtErr, controller.admin.list.updateParts)
   // 管理员 - 音乐相关
   router.resources('musicList', '/krry/music', jwtErr, controller.admin.music)
+  // 管理员 - 用户相关
+  router.resources('user', '/krry/user', jwtErr, controller.admin.user)
 }

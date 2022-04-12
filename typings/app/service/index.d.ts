@@ -11,6 +11,7 @@ import ExportBase from '../../../app/service/base';
 import ExportPart from '../../../app/service/part';
 import ExportAdminList from '../../../app/service/admin/list';
 import ExportAdminMusic from '../../../app/service/admin/music';
+import ExportAdminUser from '../../../app/service/admin/user';
 import ExportBlogClassify from '../../../app/service/blog/classify';
 import ExportBlogList from '../../../app/service/blog/list';
 
@@ -22,6 +23,7 @@ declare module 'egg' {
     admin: {
       list: AutoInstanceType<typeof ExportAdminList>;
       music: AutoInstanceType<typeof ExportAdminMusic>;
+      user: AutoInstanceType<typeof ExportAdminUser>;
     }
     blog: {
       classify: AutoInstanceType<typeof ExportBlogClassify>;
