@@ -45,4 +45,15 @@ export default class PartController extends BaseController {
     const result = await ctx.service.part.login({ name, password })
     this.success(result)
   }
+
+  /**
+   * @description: 登出
+   * @param {*}
+   * @return {*}
+   */
+  async logout() {
+    const { ctx } = this
+    ctx.cookies.set('token', null)
+    ctx.body = 'success'
+  }
 }

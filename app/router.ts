@@ -32,6 +32,8 @@ export default (app: Application) => {
 
   // 登录接口
   router.post('/part/login', controller.part.login)
+  // 登出接口
+  router.get('/part/logout', controller.part.logout)
 
   // 需要校验登录的接口，加载中间件 jwtErr
   const jwtErr = middleware.jwtErr(app.config.jwt)
