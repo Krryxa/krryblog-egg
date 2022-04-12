@@ -7,6 +7,30 @@ import { BaseController } from '../base'
  */
 export default class ListController extends BaseController {
   /**
+   * @description: get 请求：查询列表
+   * @param {*}
+   * @return {*}
+   */
+  async index() {
+    const { ctx } = this
+
+    ctx.validate(
+      {
+        pageNo: { type: 'string', format: /\d+/, required: false },
+        pageSize: { type: 'string', format: /\d+/, required: false }
+      },
+      ctx.query
+    )
+    const { pageNo, pageSize } = ctx.query
+    const reqData = ctx.helper.filterParams({
+      pageNo,
+      pageSize
+    })
+    const BlogInfo = await ctx.service.admin.list.getBlog(reqData)
+    this.success(BlogInfo)
+  }
+
+  /**
    * @description: post 请求：新增数据
    * @param {*}
    * @return {*}

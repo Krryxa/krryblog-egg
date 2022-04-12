@@ -1,7 +1,7 @@
 import { Application } from 'egg'
 
 export default (app: Application) => {
-  const { controller, router } = app
+  const { controller, router, middleware } = app
 
   router.get('/', controller.home.index)
   // 博客相关（分页查询、查询详情）
@@ -32,4 +32,9 @@ export default (app: Application) => {
 
   // 登录接口
   router.post('/part/login', controller.part.login)
+
+  // 需要校验登录的接口，加载中间件 jwtErr
+  const jwtErr = middleware.jwtErr(app.config.jwt)
+  // 管理员 - 博客相关（分页查询、查询详情）
+  router.resources('adminList', '/krry/list', jwtErr, controller.admin.list)
 }
