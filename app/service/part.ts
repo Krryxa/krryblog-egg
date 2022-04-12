@@ -6,12 +6,22 @@ export default class PartService extends BaseService {
    * @param {*}
    * @return {*}
    */
-  async getMusic() {
+  async getMusic(pageParams = {}) {
     const { Mysql } = this
 
+    const pageList = Object.keys(pageParams).length
+      ? this.handlePageParams(pageParams)
+      : []
+    if (pageList.length) {
+      pageParams = {
+        limit: pageList[1],
+        offset: pageList[0]
+      }
+    }
     const data = await Mysql.select('music', {
       columns: ['id', 'title', 'size', 'createTime'],
-      orders: [['id', 'desc']]
+      orders: [['id', 'desc']],
+      ...pageParams
     })
     this.handleTime(data, ['createTime'])
 

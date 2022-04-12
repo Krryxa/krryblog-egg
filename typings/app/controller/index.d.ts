@@ -6,6 +6,7 @@ import ExportBase from '../../../app/controller/base';
 import ExportHome from '../../../app/controller/home';
 import ExportPart from '../../../app/controller/part';
 import ExportAdminList from '../../../app/controller/admin/list';
+import ExportAdminMusic from '../../../app/controller/admin/music';
 import ExportBlogClassify from '../../../app/controller/blog/classify';
 import ExportBlogList from '../../../app/controller/blog/list';
 
@@ -16,6 +17,7 @@ declare module 'egg' {
     part: ExportPart;
     admin: {
       list: ExportAdminList;
+      music: ExportAdminMusic;
     }
     blog: {
       classify: ExportBlogClassify;

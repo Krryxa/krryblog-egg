@@ -39,4 +39,6 @@ export default (app: Application) => {
   router.resources('adminList', '/krry/list', jwtErr, controller.admin.list)
   // 管理员 - 更新状态、删除、置顶
   router.post('/krry/updateParts', jwtErr, controller.admin.list.updateParts)
+  // 管理员 - 音乐相关
+  router.resources('musicList', '/krry/music', jwtErr, controller.admin.music)
 }

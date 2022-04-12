@@ -10,6 +10,7 @@ import ExportTest from '../../../app/service/Test';
 import ExportBase from '../../../app/service/base';
 import ExportPart from '../../../app/service/part';
 import ExportAdminList from '../../../app/service/admin/list';
+import ExportAdminMusic from '../../../app/service/admin/music';
 import ExportBlogClassify from '../../../app/service/blog/classify';
 import ExportBlogList from '../../../app/service/blog/list';
 
@@ -20,6 +21,7 @@ declare module 'egg' {
     part: AutoInstanceType<typeof ExportPart>;
     admin: {
       list: AutoInstanceType<typeof ExportAdminList>;
+      music: AutoInstanceType<typeof ExportAdminMusic>;
     }
     blog: {
       classify: AutoInstanceType<typeof ExportBlogClassify>;
