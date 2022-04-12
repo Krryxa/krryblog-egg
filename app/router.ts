@@ -37,4 +37,6 @@ export default (app: Application) => {
   const jwtErr = middleware.jwtErr(app.config.jwt)
   // 管理员 - 博客相关（分页查询、查询详情）
   router.resources('adminList', '/krry/list', jwtErr, controller.admin.list)
+  // 管理员 - 更新状态、删除、置顶
+  router.post('/krry/updateParts', jwtErr, controller.admin.list.updateParts)
 }

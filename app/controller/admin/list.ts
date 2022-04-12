@@ -31,6 +31,29 @@ export default class ListController extends BaseController {
   }
 
   /**
+   * @description: 请求：更新博客其他信息（更新发布状态、是否删除、是否置顶）
+   * 客户端要携带 csrftoken
+   * @param {*}
+   * @return {*}
+   */
+  async updateParts() {
+    const { ctx } = this
+    ctx.validate(
+      {
+        id: { type: 'number', required: true },
+        status: { type: 'number', required: false },
+        isDelete: { type: 'number', required: false },
+        isTop: { type: 'number', required: false }
+      },
+      ctx.request.body
+    )
+
+    const blog = await ctx.service.admin.list.updateBlog(ctx.request.body)
+
+    ctx.body = blog ? 'success' : false
+  }
+
+  /**
    * @description: post 请求：新增数据
    * @param {*}
    * @return {*}
