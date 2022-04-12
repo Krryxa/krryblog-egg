@@ -17,10 +17,10 @@ export default class UserService extends BaseService {
    */
   async update(params) {
     const { Mysql } = this
-    const user = await Mysql.get('user', { id: params.id })
     const updateParams: UserType = { id: params.id, name: params.name }
     if (params.originWord) {
-      // 更新密码
+      // 更新密码 先查询当前用户信息
+      const user = await Mysql.get('user', { id: params.id })
       if (params.originWord === user.password) {
         updateParams.password = params.password
       } else {
