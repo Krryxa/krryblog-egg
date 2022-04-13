@@ -19,7 +19,8 @@
     "ci": "npm run lint && npm run cov && npm run tsc",
     "autod": "autod",
     "lint": "eslint . --ext .ts",
-    "clean": "ets clean"
+    "clean": "ets clean",
+    "prepare": "husky install"
   },
   "dependencies": {
     "egg": "^2.6.1",
@@ -31,15 +32,19 @@
   },
   "devDependencies": {
     "@types/mocha": "^2.2.40",
-    "@types/node": "^7.0.12",
+    "@types/node": "^16.10.1",
     "@types/supertest": "^2.0.0",
     "autod": "^3.0.1",
     "autod-egg": "^1.1.0",
+    "chalk": "^4.1.2",
     "egg-bin": "^4.11.0",
     "egg-ci": "^1.8.0",
     "egg-mock": "^3.16.0",
     "eslint": "^6.7.2",
     "eslint-config-egg": "^8.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
+    "minimist": "^1.2.6",
     "tslib": "^1.9.0",
     "typescript": "^4.6.2"
   },
