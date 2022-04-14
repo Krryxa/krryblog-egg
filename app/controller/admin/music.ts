@@ -35,7 +35,17 @@ export default class MusicController extends BaseController {
    * @param {*}
    * @return {*}
    */
-  async create() {}
+  async create() {
+    const { ctx } = this
+
+    const res: any = await this.uploadFile('music')
+    if (!res.error) {
+      // 上传成功，写入数据库
+      // 拿到 id
+      res.id = 202
+    }
+    ctx.body = res
+  }
 
   /**
    * @description: put 请求：更新数据

@@ -20,6 +20,10 @@ export default (appInfo: EggAppInfo) => {
 
     jwt: {
       secret: 'krryxq123456'
+    },
+
+    multipart: {
+      mode: 'file'
     }
   }
 
