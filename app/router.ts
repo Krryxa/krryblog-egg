@@ -43,6 +43,18 @@ export default (app: Application) => {
   router.get('/krry/getBlogCount', jwtErr, controller.admin.list.getBlogCount)
   // 管理员 - 更新状态、删除、置顶
   router.post('/krry/updateParts', jwtErr, controller.admin.list.updateParts)
+  // 管理员 - 上传内容图片
+  router.post(
+    '/krry/uploadContent/:id',
+    jwtErr,
+    controller.admin.picture.uploadContent
+  )
+  // 管理员 - 删除内容图片
+  router.post(
+    '/krry/deleteContent',
+    jwtErr,
+    controller.admin.picture.deleteContent
+  )
   // 管理员 - 音乐相关
   router.resources('musicList', '/krry/music', jwtErr, controller.admin.music)
   // 管理员 - 用户相关
