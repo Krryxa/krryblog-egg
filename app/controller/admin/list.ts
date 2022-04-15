@@ -107,6 +107,11 @@ export default class ListController extends BaseController {
     ctx.body = result ? 'success' : '更新失败'
   }
 
+  /**
+   * @description: 新增、修改博客通用校验
+   * @param {*}
+   * @return {*}
+   */
   blogValidate() {
     const { ctx } = this
 
@@ -127,5 +132,17 @@ export default class ListController extends BaseController {
       ctx.request.body
     )
     return ctx.request.body
+  }
+
+  /**
+   * @description: 获取博客总数（发布和未发布）
+   * @param {*}
+   * @return {*}
+   */
+  async getBlogCount() {
+    const { ctx } = this
+
+    const count = await ctx.service.admin.list.getBlogCount()
+    ctx.body = count
   }
 }

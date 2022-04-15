@@ -81,4 +81,16 @@ export default class ListService extends BaseService {
 
     return result.affectedRows === 1 ? result.insertId : false
   }
+
+  /**
+   * @description: 获取博客总数（发布和未发布）
+   * @param {*}
+   * @return {*}
+   */
+  async getBlogCount() {
+    const { Mysql } = this
+
+    const blogLen = await Mysql.count('blog', {})
+    return blogLen
+  }
 }
