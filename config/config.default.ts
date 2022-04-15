@@ -23,7 +23,8 @@ export default (appInfo: EggAppInfo) => {
     },
 
     multipart: {
-      mode: 'file'
+      mode: 'file',
+      fileSize: '20mb'
     }
   }
 

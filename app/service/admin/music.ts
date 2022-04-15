@@ -17,4 +17,17 @@ export default class MusicService extends BaseService {
 
     return result.affectedRows === 1 ? result.insertId : false
   }
+
+  /**
+   * @description: 删除音乐，删除一条记录
+   * @param {*}
+   * @return {*}
+   */
+  async deleteMusic(id) {
+    const { Mysql } = this
+
+    const result: any = await Mysql.delete('music', { id })
+
+    return result.affectedRows === 1
+  }
 }

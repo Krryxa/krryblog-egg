@@ -52,16 +52,28 @@ export default class MusicController extends BaseController {
   }
 
   /**
-   * @description: put 请求：更新数据
-   * @param {*}
-   * @return {*}
-   */
-  async update() {}
-
-  /**
    * @description: DELETE 请求：删除数据
    * @param {*}
    * @return {*}
    */
-  async destroy() {}
+  async destroy() {
+    const { ctx } = this
+
+    ctx.validate(
+      {
+        filePath: { type: 'string', required: true }
+      },
+      ctx.request.body
+    )
+
+    let msg = await this.deleteFile(ctx.request.body.filePath)
+    if (msg === 'success') {
+      // 写入数据库
+      const result = await ctx.service.admin.music.deleteMusic(ctx.params.id)
+      if (!result) {
+        msg = '数据库更新失败'
+      }
+    }
+    ctx.body = msg
+  }
 }

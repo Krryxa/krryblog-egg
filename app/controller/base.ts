@@ -63,13 +63,12 @@ export class BaseController extends Controller {
       const file = ctx.request.files[0]
       // 获取文件基本信息
       const { size, data } = await ctx.helper.getFileInfo(file)
+      // 完整路径
+      const relativePath = `${this.publicPath}/${filePath}`
       // 判断没有目录就创建
-      ctx.helper.mkdirFile(`${this.publicPath}/${filePath}`)
+      ctx.helper.mkdirFile(relativePath)
       // 写文件
-      fs.writeFileSync(
-        path.join(`${this.publicPath}/${filePath}/${file.filename}`),
-        data
-      )
+      fs.writeFileSync(path.join(`${relativePath}/${file.filename}`), data)
       const createTime = dayjs().format('YYYY-MM-DD').valueOf()
 
       response = {
@@ -88,5 +87,21 @@ export class BaseController extends Controller {
       await ctx.cleanupRequestFiles()
     }
     return response
+  }
+
+  /**
+   * @description: 删除文件
+   * @param {string} filePath
+   * @return {*}
+   */
+  async deleteFile(filePath: string) {
+    // 完整路径
+    const relativePath = `${this.publicPath}/${filePath}`
+    if (fs.existsSync(relativePath)) {
+      fs.unlinkSync(relativePath)
+      return 'success'
+    } else {
+      return '文件不存在'
+    }
   }
 }
