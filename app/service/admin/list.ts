@@ -48,6 +48,41 @@ export default class ListService extends BaseService {
   }
 
   /**
+   * @description: 查询博客详情页
+   * @param {*}
+   * @return {*}
+   */
+  async getBlogDetail(id) {
+    const { Mysql } = this
+
+    const blog = await Mysql.select('blog', {
+      where: { id },
+      columns: [
+        'id',
+        'userId',
+        'title',
+        'content_md',
+        'status',
+        'description',
+        'classifyId',
+        'label',
+        'isLove',
+        'imageName',
+        'image',
+        'hit',
+        'comment',
+        'createTime',
+        'updateTime',
+        'isDelete',
+        'isTop'
+      ]
+    })
+    return {
+      result: { data: blog[0] }
+    }
+  }
+
+  /**
    * @description: 更新博客
    * @param {*}
    * @return {*}

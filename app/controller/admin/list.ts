@@ -46,6 +46,25 @@ export default class ListController extends BaseController {
   }
 
   /**
+   * @description: get 请求：根据 id 获取数据
+   * @param {*}
+   * @return {*}
+   */
+  async show() {
+    const { ctx } = this
+    ctx.validate(
+      {
+        id: { type: 'string', format: /\d+/, required: true }
+      },
+      ctx.params
+    )
+
+    const BlogInfo = await ctx.service.admin.list.getBlogDetail(ctx.params.id)
+
+    this.success(BlogInfo)
+  }
+
+  /**
    * @description: 请求：更新博客其他信息（更新发布状态、是否删除、是否置顶）
    * 客户端要携带 csrftoken
    * @param {*}
