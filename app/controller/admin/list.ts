@@ -1,4 +1,19 @@
 import { BaseController } from '../base'
+import * as dayjs from 'dayjs'
+
+// const blogFields = [
+//   'userId',
+//   'title',
+//   'content_md',
+//   'content_hm',
+//   'description',
+//   'imageName',
+//   'image',
+//   'classifyId',
+//   'label',
+//   'status',
+//   'isLove'
+// ]
 
 /**
  * @description: 需要检验登录态的接口
@@ -47,10 +62,17 @@ export default class ListController extends BaseController {
       },
       ctx.request.body
     )
+    // 只取下面三个参数，并过滤，保证此方法只更新发布状态、是否删除、是否置顶
+    const { id, status, isDelete, isTop } = ctx.request.body
+    const reqData = ctx.helper.filterParams({
+      id,
+      status,
+      isDelete,
+      isTop
+    })
+    const blog = await ctx.service.admin.list.updateBlog(reqData)
 
-    const blog = await ctx.service.admin.list.updateBlog(ctx.request.body)
-
-    ctx.body = blog ? 'success' : false
+    ctx.body = blog ? 'success' : '更新失败'
   }
 
   /**
@@ -58,19 +80,52 @@ export default class ListController extends BaseController {
    * @param {*}
    * @return {*}
    */
-  async create() {}
+  async create() {
+    const { ctx } = this
+
+    const reqData = this.blogValidate()
+    const result = await ctx.service.admin.list.addBlog(reqData)
+
+    ctx.body = result
+  }
 
   /**
    * @description: put 请求：更新数据。请求 url 需要在后面附带唯一 ID：http://127.0.0.1:7001/blog/1
    * @param {*}
    * @return {*}
    */
-  async update() {}
+  async update() {
+    const { ctx } = this
 
-  /**
-   * @description: DELETE 请求：删除数据。请求 url 需要在后面附带唯一 ID：http://127.0.0.1:7001/blog/1
-   * @param {*}
-   * @return {*}
-   */
-  async destroy() {}
+    const reqData = this.blogValidate()
+    // 获取当前时间
+    const updateTime = dayjs().format('YYYY-MM-DD HH:mm:ss').valueOf()
+    reqData.id = ctx.params.id
+    reqData.updateTime = updateTime
+    const result = await ctx.service.admin.list.updateBlog(reqData)
+
+    ctx.body = result ? 'success' : '更新失败'
+  }
+
+  blogValidate() {
+    const { ctx } = this
+
+    ctx.validate(
+      {
+        userId: { type: 'number', required: true },
+        title: { type: 'string', required: true },
+        content_md: { type: 'string', required: true },
+        content_hm: { type: 'string', required: true },
+        description: { type: 'string', required: true },
+        imageName: { type: 'string', required: true },
+        image: { type: 'string', required: true },
+        classifyId: { type: 'number', required: true },
+        label: { type: 'string', required: false },
+        status: { type: 'number', required: true },
+        isLove: { type: 'number', required: true }
+      },
+      ctx.request.body
+    )
+    return ctx.request.body
+  }
 }

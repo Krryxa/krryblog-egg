@@ -1,5 +1,6 @@
 import { BaseService } from '../base'
 import { commonColumn } from '../../const'
+import * as dayjs from 'dayjs'
 
 /**
  * ListService Service
@@ -47,22 +48,37 @@ export default class ListService extends BaseService {
   }
 
   /**
-   * @description: 更新博客其他信息（更新发布状态、是否删除、是否置顶）
+   * @description: 更新博客
    * @param {*}
    * @return {*}
    */
   async updateBlog(blog) {
-    const { Mysql, ctx } = this
+    const { Mysql } = this
 
-    // 只取下面三个参数，并过滤，保证此方法只更新发布状态、是否删除、是否置顶
-    const { id, status, isDelete, isTop } = blog
-    const reqData = ctx.helper.filterParams({
-      id,
-      status,
-      isDelete,
-      isTop
-    })
-    const result = await Mysql.update('blog', reqData)
+    const result = await Mysql.update('blog', blog)
     return result.affectedRows === 1 ? blog : false
+  }
+
+  /**
+   * @description: 新增博客
+   * @param {*} blog
+   * @return {*}
+   */
+  async addBlog(blog) {
+    const { Mysql } = this
+
+    // 获取当前时间
+    const createTime = dayjs().format('YYYY-MM-DD HH:mm:ss').valueOf()
+    blog = Object.assign({}, blog, {
+      hit: 0,
+      comment: 0,
+      createTime,
+      updateTime: createTime,
+      isDelete: 0,
+      isTop: 0
+    })
+    const result: any = await Mysql.insert('blog', blog)
+
+    return result.affectedRows === 1 ? result.insertId : false
   }
 }
