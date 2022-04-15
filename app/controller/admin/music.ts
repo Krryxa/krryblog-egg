@@ -41,8 +41,12 @@ export default class MusicController extends BaseController {
     const res: any = await this.uploadFile('music')
     if (!res.error) {
       // 上传成功，写入数据库
-      // 拿到 id
-      res.id = 202
+      const id = await ctx.service.admin.music.addMusic(res)
+      if (id) {
+        res.id = id
+      } else {
+        res.message = '数据库更新失败'
+      }
     }
     ctx.body = res
   }
