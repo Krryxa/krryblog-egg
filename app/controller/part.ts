@@ -54,6 +54,7 @@ export default class PartController extends BaseController {
   async logout() {
     const { ctx } = this
     ctx.cookies.set('token', null)
+    ctx.cookies.set('username', null)
     ctx.body = 'success'
   }
 }
