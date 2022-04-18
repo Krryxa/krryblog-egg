@@ -77,8 +77,14 @@ export default class ClassifyService extends BaseService {
       }
     }
 
+    const code = data.length
+      ? 200
+      : ctx.originalUrl.includes('getBlogBykeyword')
+      ? 406
+      : 404
+
     return {
-      code: data.length ? 200 : 404,
+      code,
       result: {
         data,
         blogLen,
