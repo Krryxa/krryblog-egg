@@ -30,6 +30,12 @@ export default class UserController extends BaseController {
       password
     })
     const msg = await ctx.service.admin.user.update(reqData)
+    if (msg === 'success') {
+      // 设置 cookie
+      ctx.cookies.set('username', name, {
+        httpOnly: false
+      })
+    }
     ctx.body = msg
   }
 }
