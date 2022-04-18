@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+import { Blob } from 'buffer'
 
 type FileSize = string | number
 
@@ -79,5 +80,20 @@ export default {
         }
       })
     })
+  },
+
+  createUUID(fileName: string) {
+    try {
+      // 拿到后缀名
+      const suffix = fileName.slice(fileName.indexOf('.'))
+      // 生成 uuid
+      const tempUrl = (URL as any).createObjectURL(new Blob([]))
+      const uuid = tempUrl.toString() // blob:nodedata:80185d3e-e785-4ab8-b324-2b4a8093f6de
+      URL.revokeObjectURL(tempUrl)
+      return uuid.slice(uuid.lastIndexOf(':') + 1) + suffix
+    } catch (err) {
+      console.log(err)
+      return fileName
+    }
   }
 }

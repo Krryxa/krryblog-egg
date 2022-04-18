@@ -44,12 +44,39 @@ export default class PictureController extends BaseController {
    * @param {*}
    * @return {*}
    */
-  async uploadCover() {}
+  async uploadCover() {
+    const { ctx } = this
+
+    // upload/cover/130
+    const res: any = await this.uploadFile(`upload/cover/${ctx.params.id}`, true)
+    ctx.body = res
+  }
 
   /**
    * @description: 删除封面图片
    * @param {*}
    * @return {*}
    */
-  async deleteCover() {}
+  async deleteCover() {
+    const { ctx } = this
+
+    ctx.validate(
+      {
+        filePath: { type: 'string', required: true }
+      },
+      ctx.request.body
+    )
+
+    let msg = await this.deleteFile(ctx.request.body.filePath)
+    if (msg === 'success' && Number(ctx.params.id)) {
+      // 如果删除成功，且是编辑博客(id > 0)，调用 sql 删除对应的图片地址
+      await ctx.service.admin.list.updateBlog({
+        id: ctx.params.id,
+        imageName: '',
+        image: ''
+      })
+    }
+
+    ctx.body = msg
+  }
 }

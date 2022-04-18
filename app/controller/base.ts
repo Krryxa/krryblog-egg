@@ -54,7 +54,7 @@ export class BaseController extends Controller {
    * @param {string} filePath
    * @return {*}
    */
-  async uploadFile(filePath: string) {
+  async uploadFile(filePath: string, uuid = false) {
     const { ctx } = this
 
     let response = {}
@@ -67,15 +67,20 @@ export class BaseController extends Controller {
       const relativePath = `${this.publicPath}/${filePath}`
       // 判断没有目录就创建
       ctx.helper.mkdirFile(relativePath)
+      // 判断是否需要 uuid
+      const fileName = uuid
+        ? ctx.helper.createUUID(file.filename)
+        : file.filename
       // 写文件
-      fs.writeFileSync(path.join(`${relativePath}/${file.filename}`), data)
+      fs.writeFileSync(path.join(`${relativePath}/${fileName}`), data)
       const createTime = dayjs().format('YYYY-MM-DD').valueOf()
 
       response = {
         createTime,
-        title: file.filename,
+        oldName: file.filename,
+        title: fileName,
         size: ctx.helper.formatFileSize(size),
-        url: `${filePath}/${file.filename}`
+        url: `${filePath}/${fileName}`
       }
     } catch (err) {
       response = {

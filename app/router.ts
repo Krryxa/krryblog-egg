@@ -55,6 +55,18 @@ export default (app: Application) => {
     jwtErr,
     controller.admin.picture.deleteContent
   )
+  // 管理员 - 上传封面图片
+  router.post(
+    '/krry/uploadCover/:id',
+    jwtErr,
+    controller.admin.picture.uploadCover
+  )
+  // 管理员 - 删除封面图片
+  router.delete(
+    '/krry/deleteCover/:id',
+    jwtErr,
+    controller.admin.picture.deleteCover
+  )
   // 管理员 - 音乐相关
   router.resources('musicList', '/krry/music', jwtErr, controller.admin.music)
   // 管理员 - 用户相关
