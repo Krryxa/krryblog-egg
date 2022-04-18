@@ -55,6 +55,7 @@ export default class PartController extends BaseController {
     const { ctx } = this
     ctx.cookies.set('token', null)
     ctx.cookies.set('username', null)
+    ctx.cookies.set('id', null)
     ctx.body = 'success'
   }
 }

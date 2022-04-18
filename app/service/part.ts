@@ -82,6 +82,9 @@ export default class PartService extends BaseService {
         ctx.cookies.set('username', reqData.name, {
           httpOnly: false
         })
+        ctx.cookies.set('id', id, {
+          httpOnly: false
+        })
       } else {
         message = 'The password is wrong~'
       }
