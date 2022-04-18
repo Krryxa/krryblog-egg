@@ -10,8 +10,14 @@ export default (options) => {
       try {
         // 解码 token，格式是 'Bearer ${token}'，split 获取 token
         const decode = ctx.app.jwt.verify(token.split(' ')[1], options.secret)
-        await next()
         console.log('decode：', decode)
+        // 查看 cookie 是否有 token
+        if (!ctx.cookies.get('token')) {
+          throw {
+            message: '没有登录态'
+          }
+        }
+        await next()
       } catch (error: any) {
         ctx.status = 401
         ctx.body = {
