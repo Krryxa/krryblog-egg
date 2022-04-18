@@ -75,8 +75,13 @@ export default class PartService extends BaseService {
           }
         )
         id = user.id
-        ctx.cookies.set('token', token) // 登录态放到 cookie
-        ctx.cookies.set('username', reqData.name)
+        // 登录态放到 cookie，为方便客户端访问cookie，设置 httpOnly false，默认是 true
+        ctx.cookies.set('token', token, {
+          httpOnly: false
+        })
+        ctx.cookies.set('username', reqData.name, {
+          httpOnly: false
+        })
       } else {
         message = 'The password is wrong~'
       }
