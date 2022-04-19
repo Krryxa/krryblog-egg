@@ -13,6 +13,8 @@ logs/
 !.autod.conf.js
 !scripts/verify-commit-msg.js
 
+app/public/
+app/view/
 app/**/*.js
 test/**/*.js
 config/**/*.js
