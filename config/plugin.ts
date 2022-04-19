@@ -27,6 +27,12 @@ const plugin: EggPlugin = {
   jwt: {
     enable: true,
     package: 'egg-jwt'
+  },
+
+  // view 模板渲染
+  nunjucks: {
+    enable: true,
+    package: 'egg-view-nunjucks'
   }
 }
 

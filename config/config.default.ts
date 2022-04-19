@@ -25,6 +25,13 @@ export default (appInfo: EggAppInfo) => {
     multipart: {
       mode: 'file',
       fileSize: '20mb'
+    },
+
+    view: {
+      defaultViewEngine: 'nunjucks',
+      mapping: {
+        '.html': 'nunjucks'
+      }
     }
   }
 
