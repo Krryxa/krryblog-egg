@@ -3,11 +3,13 @@
 
 import 'egg';
 import ExportErrorHandler from '../../../app/middleware/error_handler';
+import ExportGzip from '../../../app/middleware/gzip';
 import ExportJwtErr from '../../../app/middleware/jwt_err';
 
 declare module 'egg' {
   interface IMiddleware {
     errorHandler: typeof ExportErrorHandler;
+    gzip: typeof ExportGzip;
     jwtErr: typeof ExportJwtErr;
   }
 }

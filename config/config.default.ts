@@ -8,11 +8,23 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1648105828560_3558'
 
   // add your egg config in here
+  // 由于 nginx 开启了更好的 Brotli 压缩，这里不用注册 gzip 中间件
   config.middleware = ['errorHandler']
 
   // add your special config in here
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
+
+    // 配置 gzip 中间件的配置
+    // gzip: {
+    //   threshold: 1024 // 小于 1k 的响应体不压缩
+    // },
+
+    // 由于 nginx 开启了更好的 Brotli 压缩，这里不用配置
+    // 配置静态资源的 gzip
+    // static: {
+    //   gzip: true
+    // },
 
     tracer: {
       mode: 'uuid'
