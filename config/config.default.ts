@@ -24,9 +24,10 @@ export default (appInfo: EggAppInfo) => {
 
     // 由于 nginx 开启了更好的 Brotli 压缩，这里不用配置
     // 配置静态资源的 gzip
-    // static: {
-    //   gzip: true
-    // },
+    static: {
+      // gzip: true
+      prefix: '/' // 静态资源路径前缀，默认是 public，由于文章内容图片是绝对地址，没有 public，所以这里设置成 /
+    },
 
     tracer: {
       mode: 'uuid'
