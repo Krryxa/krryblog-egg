@@ -47,8 +47,10 @@ export default class PictureController extends BaseController {
   async uploadCover() {
     const { ctx } = this
 
-    // upload/cover/130
-    const res: any = await this.uploadFile(`upload/cover/${ctx.params.id}`, true)
+    // upload/cover/130.webp
+    const res: any = await this.uploadFile(`upload/cover`, {
+      fileName: ctx.params.id
+    })
     ctx.body = res
   }
 

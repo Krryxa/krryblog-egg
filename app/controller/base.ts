@@ -3,6 +3,11 @@ import * as dayjs from 'dayjs'
 const fs = require('fs')
 const path = require('path')
 
+interface FileNameOption {
+  uuid?: Boolean
+  fileName?: String
+}
+
 export class BaseController extends Controller {
   /**
    * @description: 定义响应格式、状态码
@@ -52,9 +57,13 @@ export class BaseController extends Controller {
   /**
    * @description: 上传文件
    * @param {string} filePath
+   * @param {*} fileNameOption：uuid 是否需要 uuid 文件名，fileName 直接传入文件名
    * @return {*}
    */
-  async uploadFile(filePath: string, uuid = false) {
+  async uploadFile(
+    filePath: string,
+    fileNameOption: FileNameOption = { uuid: false, fileName: '' }
+  ) {
     const { ctx } = this
 
     let response = {}
@@ -67,9 +76,13 @@ export class BaseController extends Controller {
       const relativePath = `${this.publicPath}/${filePath}`
       // 判断没有目录就创建
       ctx.helper.mkdirFile(relativePath)
+      // 获取后缀名
+      const suffix = file.filename.slice(file.filename.indexOf('.'))
       // 判断是否需要 uuid
-      const fileName = uuid
+      const fileName = fileNameOption.uuid
         ? ctx.helper.createUUID(file.filename)
+        : fileNameOption.fileName
+        ? fileNameOption.fileName + suffix
         : file.filename
       // 写文件
       fs.writeFileSync(path.join(`${relativePath}/${fileName}`), data)
