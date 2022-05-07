@@ -64,19 +64,6 @@ export default class ClassifyService extends BaseService {
     )
     const blogLen = len[0].blogLen
 
-    let category: null | { name?: string; loveName?: string } = null
-    if (params.id) {
-      // 查询分类
-      category = await Mysql.get('classify', { id: params.id })
-    }
-
-    if (ctx.originalUrl.includes('getLoveBlog')) {
-      // 按 love 查询，需要返回固定的 name
-      category = {
-        loveName: '双 K 之恋'
-      }
-    }
-
     const code = data.length
       ? 200
       : ctx.originalUrl.includes('getBlogBykeyword')
@@ -87,9 +74,7 @@ export default class ClassifyService extends BaseService {
       code,
       result: {
         data,
-        blogLen,
-        categoryName: category?.name,
-        name: category?.loveName
+        blogLen
       }
     }
   }
