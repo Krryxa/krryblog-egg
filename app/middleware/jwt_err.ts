@@ -22,7 +22,8 @@ export default (options) => {
         ctx.status = 401
         ctx.body = {
           ...body,
-          message: error.message
+          message:
+            error.message === 'jwt expired' ? '登录态过期' : error.message
         }
       }
     } else {
