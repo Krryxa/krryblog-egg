@@ -39,7 +39,8 @@ export default (appInfo: EggAppInfo) => {
 
     multipart: {
       mode: 'file',
-      fileSize: '20mb'
+      fileSize: '20mb',
+      fileExtensions: ['.avif'] // 增加对 avif 扩展名的文件支持
     },
 
     view: {
