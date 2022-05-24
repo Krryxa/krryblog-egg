@@ -69,6 +69,7 @@ export default class ListService extends BaseService {
         'isLove',
         'imageName',
         'image',
+        'imageWebp',
         'hit',
         'comment',
         'createTime',

@@ -64,7 +64,8 @@ export default class PictureController extends BaseController {
 
     ctx.validate(
       {
-        filePath: { type: 'string', required: true }
+        filePath: { type: 'string', required: true },
+        isBackup: { type: 'boolean', required: false }
       },
       ctx.request.body
     )
@@ -72,10 +73,12 @@ export default class PictureController extends BaseController {
     let msg = await this.deleteFile(ctx.request.body.filePath)
     if (msg === 'success' && Number(ctx.params.id)) {
       // 如果删除成功，且是编辑博客(id > 0)，调用 sql 删除对应的图片地址
+      const reqData = ctx.request.body.isBackup
+        ? { imageWebp: '' }
+        : { imageName: '', image: '' }
       await ctx.service.admin.list.updateBlog({
         id: ctx.params.id,
-        imageName: '',
-        image: ''
+        ...reqData
       })
     }
 

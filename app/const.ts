@@ -4,6 +4,7 @@ export const commonColumn = [
   'b.description',
   'b.imageName',
   'b.image',
+  'b.imageWebp',
   'b.classifyId',
   'b.label',
   'b.hit',
