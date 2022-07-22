@@ -1,4 +1,4 @@
-// This file is created by egg-ts-helper@1.30.2
+// This file is created by egg-ts-helper@1.31.2
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
@@ -19,6 +19,7 @@ import 'egg-apigw-tracer';
 import 'egg-mysql';
 import 'egg-jwt';
 import 'egg-view-nunjucks';
+import 'egg-alinode';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -39,5 +40,6 @@ declare module 'egg' {
     mysql?: EggPluginItem;
     jwt?: EggPluginItem;
     nunjucks?: EggPluginItem;
+    alinode?: EggPluginItem;
   }
 }
