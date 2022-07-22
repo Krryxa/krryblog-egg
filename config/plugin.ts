@@ -33,6 +33,12 @@ const plugin: EggPlugin = {
   nunjucks: {
     enable: true,
     package: 'egg-view-nunjucks'
+  },
+
+  // 接入阿里 nodejs 性能平台
+  alinode: {
+    enable: true,
+    package: 'egg-alinode',
   }
 }
 
