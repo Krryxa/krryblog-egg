@@ -71,6 +71,11 @@ export default (app: Application) => {
   router.resources('musicList', '/krry/music', jwtErr, controller.admin.music)
   // 管理员 - 用户相关
   router.resources('user', '/krry/user', jwtErr, controller.admin.user)
+  router.put(
+    '/krry/user/updateConfig/:id',
+    jwtErr,
+    controller.admin.user.updateConfig
+  )
 
   // 放在最后配置，除上面所有路由，其他全部映射到 index.html
   router.get('*', controller.home.index)

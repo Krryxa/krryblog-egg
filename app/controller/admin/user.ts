@@ -38,4 +38,17 @@ export default class UserController extends BaseController {
     }
     ctx.body = msg
   }
+
+  /**
+   * @description: 更新用户配置
+   * @param {*}
+   * @return {*}
+   */
+  async updateConfig() {
+    const { ctx } = this
+
+    const result = await ctx.service.admin.user.updateConfig(ctx.request.body)
+
+    this.success({ result })
+  }
 }

@@ -59,4 +59,17 @@ export class BaseService extends Service {
   handlePageParams(params) {
     return [(+params.pageNo - 1) * params.pageSize, +params.pageSize]
   }
+
+  /**
+   * @description: 查询博客配置
+   * @param {*}
+   * @return {*}
+   */
+  async getConfig() {
+    const { Mysql } = this
+
+    const data = await Mysql.get('config', { id: 1 })
+
+    return data
+  }
 }

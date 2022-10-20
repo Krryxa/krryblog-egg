@@ -42,8 +42,11 @@ export default class ListService extends BaseService {
       isDelete: 0
     })
 
+    // 查询博客配置
+    const config = await this.getConfig()
+
     return {
-      result: { data, blogLen }
+      result: { data, blogLen, config }
     }
   }
 

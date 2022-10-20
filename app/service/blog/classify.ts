@@ -64,6 +64,9 @@ export default class ClassifyService extends BaseService {
     )
     const blogLen = len[0].blogLen
 
+    // 查询博客配置
+    const config = await this.getConfig()
+
     const code = data.length
       ? 200
       : ctx.originalUrl.includes('getBlogBykeyword')
@@ -74,7 +77,8 @@ export default class ClassifyService extends BaseService {
       code,
       result: {
         data,
-        blogLen
+        blogLen,
+        config
       }
     }
   }

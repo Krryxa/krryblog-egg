@@ -30,4 +30,17 @@ export default class UserService extends BaseService {
     const result = await Mysql.update('user', updateParams)
     return result.affectedRows === 1 ? 'success' : 'fail to modify'
   }
+
+  /**
+   * @description: 更新博客配置
+   * @param {*}
+   * @return {*}
+   */
+  async updateConfig(config) {
+    const { Mysql } = this
+
+    const result = await Mysql.update('config', config)
+
+    return result.affectedRows === 1
+  }
 }
