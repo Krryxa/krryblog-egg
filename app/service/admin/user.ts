@@ -20,7 +20,7 @@ export default class UserService extends BaseService {
     const updateParams: UserType = { id: params.id, name: params.name }
     if (params.originWord) {
       // 更新密码 先查询当前用户信息
-      const user = await Mysql.get('user', { id: params.id })
+      const user = (await Mysql.get('user', { id: params.id })) as UserType
       if (params.originWord === user.password) {
         updateParams.password = params.password
       } else {

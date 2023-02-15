@@ -1,31 +1,23 @@
 import { Service } from 'egg'
 
-// 由于官方 egg-mysql 定义的类型缺少部分函数，需要手动加上
+// 由于官方 egg-mysql 定义的类型缺少部分函数，需要手动加上（本人已提 PR 加上）
 // 先获取原本类型，再继承
 // type BaseMysql = typeof this.app.mysql
 // 发现可直接读取 EggMySQL 类型
-interface MysqlType extends EggMySQL {
-  count: (table: string, values: object) => Promise<number>
-  get: any
-}
+// interface MysqlType extends EggMySQL {
+//   count: (table: string, values: object) => Promise<number>
+//   get: any
+// }
 
 /**
  * BaseService Service
  */
 export class BaseService extends Service {
-  /**
-   * @description: 重新定义 mysql 类型
-   * @param {*}
-   * @return {*}
-   */
-  getMysql = () => {
-    return this.app.mysql as MysqlType
-  }
 
   /**
    * @description: 获取 mysql 实例
    */
-  Mysql = this.getMysql()
+  Mysql = this.app.mysql
 
   /**
    * @description: 对象转变 query 语句
