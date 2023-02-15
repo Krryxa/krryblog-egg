@@ -1,10 +1,4 @@
-import { BaseService } from '../base'
-
-interface UserType {
-  id: number
-  name: string
-  password?: string
-}
+import { BaseService, UserType } from '../base'
 
 /**
  * UserService Service

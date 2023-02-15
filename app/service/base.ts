@@ -9,6 +9,12 @@ import { Service } from 'egg'
 //   get: any
 // }
 
+export interface UserType {
+  id: number | string
+  name: string
+  password?: string
+}
+
 /**
  * BaseService Service
  */

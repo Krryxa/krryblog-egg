@@ -1,4 +1,4 @@
-import { BaseService } from './base'
+import { BaseService, UserType } from './base'
 
 export default class PartService extends BaseService {
   /**
@@ -58,10 +58,10 @@ export default class PartService extends BaseService {
    */
   async login(reqData) {
     const { Mysql, app, ctx } = this
-    const user = await Mysql.get('user', { name: reqData.name })
+    const user = (await Mysql.get('user', { name: reqData.name })) as UserType
 
     let message = 'success'
-    let id = 'no'
+    let id: string | number = 'no'
     if (user) {
       if (user.password === reqData.password) {
         // 生成 token
@@ -82,7 +82,7 @@ export default class PartService extends BaseService {
         ctx.cookies.set('username', reqData.name, {
           httpOnly: false
         })
-        ctx.cookies.set('id', id, {
+        ctx.cookies.set('id', id as string, {
           httpOnly: false
         })
       } else {
