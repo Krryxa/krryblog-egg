@@ -112,8 +112,11 @@ export default class ListService extends BaseService {
     // 处理时间，只保留年月日
     this.handleTime(data, ['createTime', 'updateTime'])
 
+    // 查询博客配置
+    const config = await this.getConfig()
+
     return {
-      result: { data }
+      result: { data, config }
     }
   }
 
